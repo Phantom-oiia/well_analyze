@@ -6,25 +6,19 @@ import matplotlib.pyplot as plt
 st.set_page_config(page_title="Анализ оттока клиентов", layout="wide")
 st.title("📊 Универсальный анализатор оттока клиентов")
 
-# --- Котик-приветствие ---
-st.markdown("### Привет, дружок Я — твой аналитик-котик 🐾")
-st.image("https://cataas.com/cat/says/Загрузи%20файл", use_column_width=True, caption="Готов к анализу!")
-
-
 st.markdown("""
 Загрузите CSV-файл с данными о клиентах — и узнайте, почему они уходят.  
 Поддерживается русский и английский язык.
 """)
 
 # --- Загрузка файла ---
-uploaded_file = st.file_uploader("📁 Загрузите CSV-файл", type="csv")
+uploaded_file = st.file_uploader("Загрузите CSV-файл", type="csv")
 
 if uploaded_file is not None:
     try:
         # Читаем файл
         df = pd.read_csv(uploaded_file)
         st.success("✅ Файл загружен успешно!")
-        st.image("https://cataas.com/cat/cute", width=200, caption="О, интересные данные!")
         st.write("### Первые строки данных:")
         st.dataframe(df.head())
 
@@ -42,7 +36,6 @@ if uploaded_file is not None:
 
         if not col_churn:
             st.error("❌ Не найден столбец с информацией об оттоке (например, Churn)")
-            st.image("https://cataas.com/cat/sad", width=200, caption="Не могу помочь без данных об оттоке...")
             st.stop()
 
         # --- Преобразуем Churn в 0/1 ---
@@ -73,7 +66,6 @@ if uploaded_file is not None:
 
         # --- Вывод графиков ---
         st.write("### 📈 Результаты анализа")
-        st.image("https://cataas.com/cat/working", width=180, caption="Котик строит графики...")
 
         fig, axes = plt.subplots(2, 2, figsize=(12, 10))
         axes = axes.flatten()
@@ -117,30 +109,22 @@ if uploaded_file is not None:
         st.write("### 💡 Выводы")
         st.write(f"- Всего клиентов: **{len(df)}**")
         st.write(f"- Ушло: **{churn_count}** ({churn_rate:.1%})")
-
         if churn_rate > 0.3:
             st.warning("⚠️ Высокий отток Рассмотрите меры удержания.")
-            st.image("https://cataas.com/cat/sad", width=200, caption="Ой-ой... давайте сохраним клиентов!")
         else:
             st.success("✅ Уровень оттока в норме.")
-            st.image("https://cataas.com/cat/happy", width=200, caption="Котик доволен 😸")
 
         if avg_churn_charge and avg_stay_charge:
             if avg_churn_charge > avg_stay_charge:
                 diff = (avg_churn_charge - avg_stay_charge) / avg_stay_charge * 100
                 st.warning(f"💸 Ушедшие платили на **{diff:.1f}% больше** — возможно, цена отпугивает.")
-                st.image("https://cataas.com/cat/money", width=200, caption="Дорого — не значит круто!")
             else:
                 st.info("💳 Платежи не являются причиной оттока.")
-                st.image("https://cataas.com/cat/check", width=200, caption="Цены в порядке!")
 
         if col_contract:
             st.info(f"📌 Совет: клиенты с месячным контрактом чаще уходят — предложите скидку за долгосрочную подписку.")
-            st.image("https://cataas.com/cat/dance", width=200, caption="Подписка — и котик танцует!")
 
     except Exception as e:
         st.error(f"❌ Ошибка при обработке файла: {e}")
-        st.image("https://cataas.com/cat/angry", width=200, caption="Что-то пошло не так...")
 else:
     st.info("👈 Загрузите CSV-файл, чтобы начать анализ.")
-    st.image("https://cataas.com/cat/sleep", width=200, caption="Котик ждёт файл...")
