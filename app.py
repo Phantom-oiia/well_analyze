@@ -8,7 +8,8 @@ st.title("📊 Универсальный анализатор оттока кл
 
 # --- Котик-приветствие ---
 st.markdown("### Привет, дружок Я — твой аналитик-котик 🐾")
-st.image("https://cataas.com/cat/says/Загрузи%20файл", width=300, caption="Готов к анализу!")
+st.image("https://cataas.com/cat/says/Загрузи%20файл", use_column_width=True, caption="Готов к анализу!")
+
 
 st.markdown("""
 Загрузите CSV-файл с данными о клиентах — и узнайте, почему они уходят.  
